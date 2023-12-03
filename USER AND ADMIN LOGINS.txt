@@ -1,0 +1,10 @@
+Admin Login
+
+USERNAME: Admin
+PASSWORD: 123123
+
+
+User Login:
+
+USERNAME: Test@gmail.com|
+PASSWORD: 123123
