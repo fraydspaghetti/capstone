@@ -176,7 +176,7 @@ if (strlen($_SESSION['alogin']) == 0) {
 		<script src="js/chartData.js"></script>
 		<script src="js/main.js"></script>
 		<script src="sweetalert2.min.js"></script>
-	
+
 	</body>
 
 	</html>

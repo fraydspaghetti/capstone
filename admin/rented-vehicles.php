@@ -29,20 +29,15 @@ if (strlen($_SESSION['alogin']) == 0) {
 		$query->execute();
 
 		$msg = "Booking Successfully Confirmed";
-	}
-	else{
-		if(isset($_GET['del']))
-		{
-		$id=$_GET['del'];
-		$sql = "delete from tblbooking  WHERE id=:id";
-		$query = $dbh->prepare($sql);
-		$query -> bindParam(':id',$id, PDO::PARAM_STR);
-		$query -> execute();
-		$msg="Reservation deleted successfully!";
-		
+	} else {
+		if (isset($_GET['del'])) {
+			$id = $_GET['del'];
+			$sql = "delete from tblbooking  WHERE id=:id";
+			$query = $dbh->prepare($sql);
+			$query->bindParam(':id', $id, PDO::PARAM_STR);
+			$query->execute();
+			$msg = "Reservation deleted successfully!";
 		}
-		
-
 	}
 ?>
 
@@ -125,76 +120,49 @@ if (strlen($_SESSION['alogin']) == 0) {
 												<th>Vehicle</th>
 												<th>From Date</th>
 												<th>To Date</th>
-												
-												<th>Status</th>
+
 												<th>Posting date</th>
-                                                <th>Is Rented</th>
-                                                <th>Is Returned</th>
+												<th>Is Returned</th>
 												<th>Action</th>
 											</tr>
 										</thead>
-										<tfoot>
-											<tr>
-												<th>#</th>
-												<th>User Email</th>
-												<th>Vehicle</th>
-												<th>From Date</th>
-												<th>To Date</th>
-												<th>Status</th>
-												<th>Posting date</th>
-                                                <th>Is Rented</th>
-                                                <th>Is Returned</th>
-												<th>Action</th>
-											</tr>
-										</tfoot>
+
 										<tbody>
 
-											<?php $sql = "SELECT tblusers.FullName,tblbrands.BrandName,tblvehicles.VehiclesTitle,tblbooking.FromDate,tblbooking.ToDate,tblbooking.message,tblbooking.VehicleId,tblbooking.Returned as vid,tblbooking.Status,tblbooking.PostingDate,tblbooking.id,tblbooking.Returned  from tblbooking join tblvehicles on tblvehicles.id=tblbooking.VehicleId join tblusers on tblusers.EmailId=tblbooking.userEmail join tblbrands on tblvehicles.VehiclesBrand=tblbrands.id  ";
+											<?php
+											$sql = "SELECT tblusers.FullName, tblbrands.BrandName, tblvehicles.VehiclesTitle, tblbooking.FromDate, tblbooking.ToDate, tblbooking.message, tblbooking.VehicleId, tblbooking.Returned as vid, tblbooking.Status, tblbooking.PostingDate, tblbooking.id, tblbooking.Returned 
+																		FROM tblbooking 
+																		JOIN tblvehicles ON tblvehicles.id = tblbooking.VehicleId 
+																		JOIN tblusers ON tblusers.EmailId = tblbooking.userEmail 
+																		JOIN tblbrands ON tblvehicles.VehiclesBrand = tblbrands.id  
+																		ORDER BY tblbooking.PostingDate DESC";
+
 											$query = $dbh->prepare($sql);
 											$query->execute();
 											$results = $query->fetchAll(PDO::FETCH_OBJ);
 											$cnt = 1;
+
 											if ($query->rowCount() > 0) {
 												foreach ($results as $result) {				?>
 													<tr>
 														<td><?php echo htmlentities($cnt); ?></td>
 														<td><?php echo htmlentities($result->FullName); ?></td>
 														<td><a href="edit-vehicle.php?id=<?php echo htmlentities($result->vid); ?>"><?php echo htmlentities($result->BrandName); ?> , <?php echo htmlentities($result->VehiclesTitle); ?></td>
-														<td><?php echo htmlentities($result->FromDate); ?></td>
-														<td><?php echo htmlentities($result->ToDate); ?></td>
+														<td><?php echo date('M j, Y', strtotime($result->FromDate)); ?></td>
+														<td><?php echo date('M j, Y', strtotime($result->ToDate)); ?>
+														<td><?php echo date('M j, Y g:i:s A', strtotime($result->PostingDate)); ?></td>
+
 														<td><?php
-															if ($result->Status == 0) {
-																echo htmlentities('Not Confirmed yet');
-															} else if ($result->Status == 1) {
-																echo htmlentities('Confirmed');
-															} 
-															else {
-																echo htmlentities('Cancelled');
-															}
-															?></td>
-														<td><?php echo htmlentities($result->PostingDate); ?></td>
-                                                        <td><?php
-															if ($result->Status == 0) {
-																echo htmlentities('Not Yet Rented');
-															} else if ($result->Status == 1) {
-																echo htmlentities('Yes It Is Rented');
-															} 
-															else {
-																echo htmlentities('Cancelled');
-															}
-															?></td>
-                                                            <td><?php
 															if ($result->Returned == 0) {
-																echo htmlentities('Not yet Returned');
+																echo htmlentities('Not Returned');
 															} else if ($result->Returned == 1) {
 																echo htmlentities('Returned');
-															} 
-															else {
+															} else {
 																echo htmlentities('Cancelled');
 															}
 															?></td>
 														<td>
-															
+
 															<a class="btn btn-danger" href="rented-vehicles.php?del=<?php echo $result->id; ?>" onclick="  DeleteUnit(event)"><i class="fa fa-trash"></i></a>
 
 														</td>

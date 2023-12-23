@@ -3,7 +3,7 @@ include 'function.php';
 if (isset($_SESSION['login'])) {
 	header("location: dashboard.php");
 	exit();
- }
+}
 ?>
 
 
@@ -60,12 +60,12 @@ if (isset($_SESSION['login'])) {
 		</div>
 	</div>
 
-	
 
 
 
 
-	
+
+
 
 
 	<!-- Loading Scripts -->
@@ -79,7 +79,7 @@ if (isset($_SESSION['login'])) {
 	<script src="js/chartData.js"></script>
 	<script src="js/main.js"></script>
 	<script src="alert.js"></script>
-	
+
 
 </body>
 

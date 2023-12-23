@@ -183,25 +183,52 @@ if (isset($_POST['submit'])) {
                 <div class="widget_heading">
                   <h5><i class="fa fa-envelope" aria-hidden="true"></i>Rent Now</h5>
                 </div>
+                <script>
+                  document.addEventListener("DOMContentLoaded", function() {
+                    // Get the date input elements
+                    var fromDateInput = document.querySelector('input[name="fromdate"]');
+                    var toDateInput = document.querySelector('input[name="todate"]');
+
+                    // Set the min attribute to today's date for both inputs
+                    var today = new Date().toISOString().split("T")[0];
+                    fromDateInput.setAttribute("min", today);
+                    toDateInput.setAttribute("min", today);
+
+                    // Add event listener to "From Date" input
+                    fromDateInput.addEventListener("input", function() {
+                      // Set the min attribute for "To Date" based on the selected "From Date"
+                      toDateInput.setAttribute("min", fromDateInput.value);
+                    });
+                  });
+                </script>
+
                 <form method="post">
                   <div class="form-group">
-                    <input type="date" class="form-control" name="fromdate" placeholder="FROM DATE(DD/MM/YYYY)" required>
-                  </div>
-                  <div class="form-group">
-                    <input type="date" class="form-control" name="todate" placeholder="TO DATE(DD/MM/YYYY)" required>
-                  </div>
-                  <div class="form-group">
-                    <textarea rows="4" class="form-control" name="message" placeholder="Message" required></textarea>
-                  </div>
-                  <?php if ($_SESSION['login']) { ?>
+                    <!-- ... Other form elements ... -->
                     <div class="form-group">
-                      <input type="submit" class="btn" name="submit" value="Rent Now">
+                      <label class="control-label">From Date</label>
+                      <input type="date" class="form-control" name="fromdate" placeholder="FROM DATE(DD/MM/YYYY)" required>
                     </div>
-                  <?php } else { ?>
-                    <a href="#loginform" class="btn btn-xs uppercase" data-toggle="modal" data-dismiss="modal">Login For Book</a>
 
-                  <?php } ?>
+                    <div class="form-group">
+                      <label class="control-label">To Date</label>
+                      <input type="date" class="form-control" name="todate" placeholder="TO DATE(DD/MM/YYYY)" required>
+                    </div>
+
+                    <div class="form-group">
+                      <textarea rows="4" class="form-control" name="message" placeholder="Message" required></textarea>
+                    </div>
+
+                    <?php if ($_SESSION['login']) { ?>
+                      <div class="form-group">
+                        <input type="submit" class="btn" name="submit" value="Rent Now">
+                      </div>
+                    <?php } else { ?>
+                      <a href="#loginform" class="btn btn-xs uppercase" data-toggle="modal" data-dismiss="modal">Login For Book</a>
+                    <?php } ?>
+                  </div>
                 </form>
+
               </div>
             </aside>
             <!--/Side-Bar-->
@@ -212,7 +239,7 @@ if (isset($_POST['submit'])) {
 
           <!--Similar-Cars-->
           <div class="similar_cars">
-            <h3>Similar Bikes</h3>
+            <h3>Similar Vehicle</h3>
             <div class="row">
               <?php
               $bid = $_SESSION['brndid'];

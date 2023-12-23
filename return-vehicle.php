@@ -1,12 +1,13 @@
 <?php
 include('includes/config.php');
 
-            function insertData($Returned) {
+function insertData($Returned)
+{
     // Perform any necessary validation or sanitization on the data
 
     // Assuming you have a table called 'users' with columns 'name' and 'email'
     $query = "INSERT INTO tblbooking ('Returned') VALUES ('$Returned')";
-    
+
     $result = mysqli_query($connection, $query);
 
     // Check if the query was successful
@@ -30,8 +31,7 @@ if (isset($_POST['submit'])) {
 <!-- HTML form -->
 <form method="POST" action="">
 
-    <input type="Returned" name="Returned" id="Returned" ><br>
+    <input type="Returned" name="Returned" id="Returned"><br>
 
     <input class="btn btn-danger" type="submit" name="submit" value="Returned This Unit">
 </form>
-

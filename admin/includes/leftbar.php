@@ -17,16 +17,20 @@
 						<li><a href="manage-vehicles.php">Manage Vehicles</a></li>
 						<li><a href="rented-vehicles.php">Rented Vehicles</a></li>
 
+
+
 					</ul>
+
 				</li>
+				<li><a href="sales.php"><i class="fa fa-shopping-cart"></i> Payment</a></li>
+
 				<li><a href="manage-bookings.php"><i class="fa fa-users"></i> Manage Booking</a></li>
 
 				<li><a href="feedbacks.php"><i class="fa fa-table"></i> Manage Feedbacks</a></li>
 				<li><a href="reg-users.php"><i class="fa fa-users"></i> Registered Users</a></li>
 			<li><a href="manage-pages.php"><i class="fa fa-files-o"></i> Manage Pages</a></li>
 			<li><a href="manage-contactusquery.php"><i class="fa fa-files-o"></i> Manage Queries</a></li>
-
-			
+		
 			<li><a href="update-contactinfo.php"><i class="fa fa-files-o"></i> Update Contact Info</a></li>
 
 

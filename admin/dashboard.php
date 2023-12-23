@@ -3,8 +3,8 @@ session_start();
 error_reporting(0);
 include('includes/config.php');
 if (!isset($_SESSION['alogin'])) {
-    header("location: index.php");
-    exit();
+	header("location: index.php");
+	exit();
 }
 
 ?>
@@ -43,10 +43,10 @@ if (!isset($_SESSION['alogin'])) {
 </head>
 
 <body>
-<?php include('includes/header.php');?>
+	<?php include('includes/header.php'); ?>
 
 	<div class="ts-main-content">
-<?php include('includes/leftbar.php');?>
+		<?php include('includes/leftbar.php'); ?>
 		<div class="content-wrapper">
 			<div class="container-fluid">
 
@@ -62,14 +62,14 @@ if (!isset($_SESSION['alogin'])) {
 										<div class="panel panel-default">
 											<div class="panel-body bk-primary text-light">
 												<div class="stat-panel text-center">
-<?php
-$sql ="SELECT id from tblusers ";
-$query = $dbh -> prepare($sql);
-$query->execute();
-$results=$query->fetchAll(PDO::FETCH_OBJ);
-$regusers=$query->rowCount();
-?>
-													<div class="stat-panel-number h1 "><?php echo htmlentities($regusers);?></div>
+													<?php
+													$sql = "SELECT id from tblusers ";
+													$query = $dbh->prepare($sql);
+													$query->execute();
+													$results = $query->fetchAll(PDO::FETCH_OBJ);
+													$regusers = $query->rowCount();
+													?>
+													<div class="stat-panel-number h1 "><?php echo htmlentities($regusers); ?></div>
 													<div class="stat-panel-title text-uppercase">Reg Users</div>
 												</div>
 											</div>
@@ -80,14 +80,14 @@ $regusers=$query->rowCount();
 										<div class="panel panel-default">
 											<div class="panel-body bk-success text-light">
 												<div class="stat-panel text-center">
-												<?php
-$sql1 ="SELECT id from tblvehicles ";
-$query1 = $dbh -> prepare($sql1);;
-$query1->execute();
-$results1=$query1->fetchAll(PDO::FETCH_OBJ);
-$totalvehicle=$query1->rowCount();
-?>
-													<div class="stat-panel-number h1 "><?php echo htmlentities($totalvehicle);?></div>
+													<?php
+													$sql1 = "SELECT id from tblvehicles ";
+													$query1 = $dbh->prepare($sql1);;
+													$query1->execute();
+													$results1 = $query1->fetchAll(PDO::FETCH_OBJ);
+													$totalvehicle = $query1->rowCount();
+													?>
+													<div class="stat-panel-number h1 "><?php echo htmlentities($totalvehicle); ?></div>
 													<div class="stat-panel-title text-uppercase">Listed Vehicles</div>
 												</div>
 											</div>
@@ -98,15 +98,15 @@ $totalvehicle=$query1->rowCount();
 										<div class="panel panel-default">
 											<div class="panel-body bk-info text-light">
 												<div class="stat-panel text-center">
-<?php
-$sql2 ="SELECT id from tblbooking ";
-$query2= $dbh -> prepare($sql2);
-$query2->execute();
-$results2=$query2->fetchAll(PDO::FETCH_OBJ);
-$bookings=$query2->rowCount();
-?>
+													<?php
+													$sql2 = "SELECT id from tblbooking ";
+													$query2 = $dbh->prepare($sql2);
+													$query2->execute();
+													$results2 = $query2->fetchAll(PDO::FETCH_OBJ);
+													$bookings = $query2->rowCount();
+													?>
 
-													<div class="stat-panel-number h1 "><?php echo htmlentities($bookings);?></div>
+													<div class="stat-panel-number h1 "><?php echo htmlentities($bookings); ?></div>
 													<div class="stat-panel-title text-uppercase">Total Bookings</div>
 												</div>
 											</div>
@@ -117,14 +117,14 @@ $bookings=$query2->rowCount();
 										<div class="panel panel-default">
 											<div class="panel-body bk-warning text-light">
 												<div class="stat-panel text-center">
-<?php
-$sql3 ="SELECT id from tblbrands ";
-$query3= $dbh -> prepare($sql3);
-$query3->execute();
-$results3=$query3->fetchAll(PDO::FETCH_OBJ);
-$brands=$query3->rowCount();
-?>
-													<div class="stat-panel-number h1 "><?php echo htmlentities($brands);?></div>
+													<?php
+													$sql3 = "SELECT id from tblbrands ";
+													$query3 = $dbh->prepare($sql3);
+													$query3->execute();
+													$results3 = $query3->fetchAll(PDO::FETCH_OBJ);
+													$brands = $query3->rowCount();
+													?>
+													<div class="stat-panel-number h1 "><?php echo htmlentities($brands); ?></div>
 													<div class="stat-panel-title text-uppercase">Listed Brands</div>
 												</div>
 											</div>
@@ -139,7 +139,7 @@ $brands=$query3->rowCount();
 
 
 
-<div class="row">
+				<div class="row">
 					<div class="col-md-12">
 
 
@@ -151,14 +151,14 @@ $brands=$query3->rowCount();
 											<div class="panel-body bk-primary text-light">
 												<div class="stat-panel text-center">
 
-												<?php
-$sql6 ="SELECT id from tblcontactusquery ";
-$query6 = $dbh -> prepare($sql6);;
-$query6->execute();
-$results6=$query6->fetchAll(PDO::FETCH_OBJ);
-$query=$query6->rowCount();
-?>
-													<div class="stat-panel-number h1 "><?php echo htmlentities($query);?></div>
+													<?php
+													$sql6 = "SELECT id from tblcontactusquery ";
+													$query6 = $dbh->prepare($sql6);;
+													$query6->execute();
+													$results6 = $query6->fetchAll(PDO::FETCH_OBJ);
+													$query = $query6->rowCount();
+													?>
+													<div class="stat-panel-number h1 "><?php echo htmlentities($query); ?></div>
 													<div class="stat-panel-title text-uppercase">Queries</div>
 												</div>
 											</div>
@@ -169,15 +169,15 @@ $query=$query6->rowCount();
 										<div class="panel panel-default">
 											<div class="panel-body bk-info text-light">
 												<div class="stat-panel text-center">
-<?php
-$sql5 ="SELECT id from tbl_feedbacks ";
-$query5= $dbh -> prepare($sql5);
-$query5->execute();
-$results5=$query5->fetchAll(PDO::FETCH_OBJ);
-$feedbacks=$query5->rowCount();
-?>
+													<?php
+													$sql5 = "SELECT id from tbl_feedbacks ";
+													$query5 = $dbh->prepare($sql5);
+													$query5->execute();
+													$results5 = $query5->fetchAll(PDO::FETCH_OBJ);
+													$feedbacks = $query5->rowCount();
+													?>
 
-													<div class="stat-panel-number h1 "><?php echo htmlentities($feedbacks);?></div>
+													<div class="stat-panel-number h1 "><?php echo htmlentities($feedbacks); ?></div>
 													<div class="stat-panel-title text-uppercase">Feedbacks</div>
 												</div>
 											</div>
@@ -214,27 +214,31 @@ $feedbacks=$query5->rowCount();
 	<script src="js/chartData.js"></script>
 	<script src="js/main.js"></script>
 	<script src="sweetalert2.min.js"></script>
-	
+
 
 	<script>
+		window.onload = function() {
 
-	window.onload = function(){
+			var ctx = document.getElementById("dashReport").getContext("2d");
+			window.myLine = new Chart(ctx).Line(swirlData, {
+				responsive: true,
+				scaleShowVerticalLines: false,
+				scaleBeginAtZero: true,
+				multiTooltipTemplate: "<%if (label){%><%=label%>: <%}%><%= value %>",
+			});
 
-		var ctx = document.getElementById("dashReport").getContext("2d");
-		window.myLine = new Chart(ctx).Line(swirlData, {
-			responsive: true,
-			scaleShowVerticalLines: false,
-			scaleBeginAtZero : true,
-			multiTooltipTemplate: "<%if (label){%><%=label%>: <%}%><%= value %>",
-		});
+			var doctx = document.getElementById("chart-area3").getContext("2d");
+			window.myDoughnut = new Chart(doctx).Pie(doughnutData, {
+				responsive: true
+			});
 
-		var doctx = document.getElementById("chart-area3").getContext("2d");
-		window.myDoughnut = new Chart(doctx).Pie(doughnutData, {responsive : true});
+			var doctx = document.getElementById("chart-area4").getContext("2d");
+			window.myDoughnut = new Chart(doctx).Doughnut(doughnutData, {
+				responsive: true
+			});
 
-		var doctx = document.getElementById("chart-area4").getContext("2d");
-		window.myDoughnut = new Chart(doctx).Doughnut(doughnutData, {responsive : true});
-
-	}
+		}
 	</script>
 </body>
+
 </html>

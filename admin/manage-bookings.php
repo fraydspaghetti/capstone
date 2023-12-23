@@ -3,8 +3,8 @@ session_start();
 error_reporting(0);
 include('includes/config.php');
 if (!isset($_SESSION['alogin'])) {
-    header("location: index.php");
-    exit();
+	header("location: index.php");
+	exit();
 } else {
 	if (isset($_REQUEST['eid'])) {
 		$eid = intval($_GET['eid']);
@@ -14,7 +14,6 @@ if (!isset($_SESSION['alogin'])) {
 		$query->bindParam(':status', $status, PDO::PARAM_STR);
 		$query->bindParam(':eid', $eid, PDO::PARAM_STR);
 		$query->execute();
-
 	}
 
 
@@ -27,20 +26,14 @@ if (!isset($_SESSION['alogin'])) {
 		$query->bindParam(':status', $status, PDO::PARAM_STR);
 		$query->bindParam(':aeid', $aeid, PDO::PARAM_STR);
 		$query->execute();
-
-
-	}
-	else{
-		if(isset($_GET['del']))
-		{
-		$id=$_GET['del'];
-		$sql = "delete from tblbooking  WHERE id=:id";
-		$query = $dbh->prepare($sql);
-		$query -> bindParam(':id',$id, PDO::PARAM_STR);
-		$query -> execute();
+	} else {
+		if (isset($_GET['del'])) {
+			$id = $_GET['del'];
+			$sql = "delete from tblbooking  WHERE id=:id";
+			$query = $dbh->prepare($sql);
+			$query->bindParam(':id', $id, PDO::PARAM_STR);
+			$query->execute();
 		}
-		
-
 	}
 ?>
 
@@ -121,57 +114,71 @@ if (!isset($_SESSION['alogin'])) {
 												<th>Vehicle</th>
 												<th>From Date</th>
 												<th>To Date</th>
+												<th>Posting date</th>
 												<th>Message</th>
 												<th>Status</th>
-												<th>Posting date</th>
 												<th>Action</th>
 											</tr>
 										</thead>
-										<tfoot>
-											<tr>
-												<th>#</th>
-												<th>Name</th>
-												<th>Vehicle</th>
-												<th>From Date</th>
-												<th>To Date</th>
-												<th>Message</th>
-												<th>Status</th>
-												<th>Posting date</th>
-												<th>Action</th>
-											</tr>
-										</tfoot>
+
+
 										<tbody>
 
-											<?php $sql = "SELECT tblusers.FullName,tblbrands.BrandName,tblvehicles.VehiclesTitle,tblbooking.FromDate,tblbooking.ToDate,tblbooking.message,tblbooking.VehicleId as vid,tblbooking.Status,tblbooking.PostingDate,tblbooking.id  from tblbooking join tblvehicles on tblvehicles.id=tblbooking.VehicleId join tblusers on tblusers.EmailId=tblbooking.userEmail join tblbrands on tblvehicles.VehiclesBrand=tblbrands.id  ";
+											<?php
+											$sql = "SELECT tblusers.FullName, tblbrands.BrandName, tblvehicles.VehiclesTitle, tblbooking.FromDate, tblbooking.ToDate, tblbooking.message, tblbooking.VehicleId as vid, tblbooking.Status, tblbooking.PostingDate, tblbooking.id  
+																FROM tblbooking 
+																JOIN tblvehicles ON tblvehicles.id = tblbooking.VehicleId 
+																JOIN tblusers ON tblusers.EmailId = tblbooking.userEmail 
+																JOIN tblbrands ON tblvehicles.VehiclesBrand = tblbrands.id 
+																ORDER BY tblbooking.PostingDate DESC";
 											$query = $dbh->prepare($sql);
 											$query->execute();
 											$results = $query->fetchAll(PDO::FETCH_OBJ);
 											$cnt = 1;
 											if ($query->rowCount() > 0) {
-												foreach ($results as $result) {				?>
+												foreach ($results as $result) { ?>
 													<tr>
 														<td><?php echo htmlentities($cnt); ?></td>
 														<td><?php echo htmlentities($result->FullName); ?></td>
-														<td><a href="edit-vehicle.php?id=<?php echo htmlentities($result->vid); ?>"><?php echo htmlentities($result->BrandName); ?> , <?php echo htmlentities($result->VehiclesTitle); ?></td>
-														<td><?php echo htmlentities($result->FromDate); ?></td>
-														<td><?php echo htmlentities($result->ToDate); ?></td>
+														<td><a href="edit-vehicle.php?id=<?php echo htmlentities($result->vid); ?>"><?php echo htmlentities($result->BrandName); ?> , <?php echo htmlentities($result->VehiclesTitle); ?></a></td>
+														<td><?php echo date('M j, Y', strtotime($result->FromDate)); ?></td>
+														<td><?php echo date('M j, Y', strtotime($result->ToDate)); ?></td>
+														<td><?php echo date('M j, Y g:i:s A', strtotime($result->PostingDate)); ?></td>
+
 														<td><?php echo htmlentities($result->message); ?></td>
+
 														<td><?php
-															if ($result->Status == 0) {
+															$status = $result->Status;
+
+															if ($status == 0) {
 																echo htmlentities('Not Confirmed yet');
-															} else if ($result->Status == 1) {
+															} else if ($status == 1) {
 																echo htmlentities('Confirmed');
-															} 
-															else{
+															} else {
 																echo htmlentities('Cancelled');
 															}
-															?></td>
-														<td><?php echo htmlentities($result->PostingDate); ?></td>
-														<td>
-															<a class="btn btn-primary" href="manage-bookings.php?aeid=<?php echo htmlentities($result->id); ?>" onclick="showConfirm(event)"> <i id="icon" class="fa fa-check"></i></a> 
-															<a class="btn btn-dark" href="manage-bookings.php?eid=<?php echo htmlentities($result->id); ?>" onclick=" showcancel(event)"> <i id="icon" class="fa fa-times"></i></a>
-															<a class="btn btn-danger" href="manage-bookings.php?del=<?php echo $result->id; ?>" onclick="showDeleteConfirmation(event)"><i id="icon" class="fa fa-trash"></i></a>
-														</td>
+
+
+															// Display buttons conditionally based on the status
+															if ($status != 1 && $status != 2) {
+																echo '<td>
+            <a class="btn btn-primary" href="manage-bookings.php?aeid=' . htmlentities($result->id) . '" onclick="showConfirm(event)"> <i id="icon" class="fa fa-check"></i></a> 
+            <a class="btn btn-dark" href="manage-bookings.php?eid=' . htmlentities($result->id) . '" onclick="showcancel(event)"> <i id="icon" class="fa fa-times"></i></a>
+            <a class="btn btn-danger" href="manage-bookings.php?del=' . $result->id . '" onclick="showDeleteConfirmation(event)"><i id="icon" class="fa fa-trash"></i></a>
+          </td>';
+															} else if ($status != 2) {
+																echo '<td>
+            <a class="btn btn-dark" href="manage-bookings.php?eid=' . htmlentities($result->id) . '" onclick="showcancel(event)"> <i id="icon" class="fa fa-times"></i></a>
+            <a class="btn btn-danger" href="manage-bookings.php?del=' . $result->id . '" onclick="showDeleteConfirmation(event)"><i id="icon" class="fa fa-trash"></i></a>
+          </td>';
+															} else {
+																// If the status is canceled, you can choose to display some message or perform other actions
+																echo '<td>
+	<a class="btn btn-danger" href="manage-bookings.php?del=' . $result->id . '" onclick="showDeleteConfirmation(event)"><i id="icon" class="fa fa-trash"></i></a>
+	</td>				
+	';
+															}
+															?>
 
 
 													</tr>
@@ -207,7 +214,7 @@ if (!isset($_SESSION['alogin'])) {
 		<script src="js/chartData.js"></script>
 		<script src="js/main.js"></script>
 		<script src="alert.js"></script>
-		
+
 	</body>
 
 	</html>

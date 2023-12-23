@@ -7,7 +7,11 @@
           <ul>
 
 
-               <li><a href="admin/">Admin Login</a></li>
+            <li><a href="admin/">Admin Login</a></li>
+            <li><a href="page.php?type=terms">Terms and Condition</a></li>
+            <li><a href="page.php?type=privacy">Privacy and Policy</a></li>
+
+
 
           </ul>
         </div>

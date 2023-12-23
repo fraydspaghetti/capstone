@@ -1,26 +1,22 @@
 <?php
-if(isset($_POST['login']))
-{
-$email=$_POST['email'];
-$password=md5($_POST['password']);
-$sql ="SELECT EmailId,Password,FullName FROM tblusers WHERE EmailId=:email and Password=:password";
-$query= $dbh -> prepare($sql);
-$query-> bindParam(':email', $email, PDO::PARAM_STR);
-$query-> bindParam(':password', $password, PDO::PARAM_STR);
-$query-> execute();
-$results=$query->fetchAll(PDO::FETCH_OBJ);
-if($query->rowCount() > 0)
-{
-$_SESSION['login']=$_POST['email'];
-$_SESSION['fname']=$results->FullName;
-$currentpage=$_SERVER['REQUEST_URI'];
-echo "<script type='text/javascript'> document.location = '$currentpage'; </script>";
-} else{
-  
-  echo "<script>alert('Invalid Details');</script>";
+if (isset($_POST['login'])) {
+  $email = $_POST['email'];
+  $password = md5($_POST['password']);
+  $sql = "SELECT EmailId,Password,FullName FROM tblusers WHERE EmailId=:email and Password=:password";
+  $query = $dbh->prepare($sql);
+  $query->bindParam(':email', $email, PDO::PARAM_STR);
+  $query->bindParam(':password', $password, PDO::PARAM_STR);
+  $query->execute();
+  $results = $query->fetchAll(PDO::FETCH_OBJ);
+  if ($query->rowCount() > 0) {
+    $_SESSION['login'] = $_POST['email'];
+    $_SESSION['fname'] = $results->FullName;
+    $currentpage = $_SERVER['REQUEST_URI'];
+    echo "<script type='text/javascript'> document.location = '$currentpage'; </script>";
+  } else {
 
-}
-
+    echo "<script>alert('Invalid Details');</script>";
+  }
 }
 
 ?>
@@ -38,7 +34,7 @@ echo "<script type='text/javascript'> document.location = '$currentpage'; </scri
         <div class="row">
           <div class="login_wrap">
             <div class="col-md-12 col-sm-6">
-              <form  method="post">
+              <form method="post">
                 <!-- <input type="text" name="action" value="user-login"> -->
                 <div class="form-group">
                   <input type="email" class="form-control" name="email" placeholder="Enter Email Address">
@@ -48,14 +44,14 @@ echo "<script type='text/javascript'> document.location = '$currentpage'; </scri
                 </div>
                 <div class="form-group checkbox">
                   <input type="checkbox" id="remember">
-               
+
                 </div>
                 <div class="form-group">
                   <input type="submit" name="login" value="Login" class="btn btn-block">
                 </div>
               </form>
             </div>
-           
+
           </div>
         </div>
       </div>
